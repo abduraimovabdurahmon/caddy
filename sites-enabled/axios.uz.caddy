@@ -1,5 +1,5 @@
 sso.axios.uz {
-    reverse_proxy localhost:5432 {
+    reverse_proxy localhost:5173 {
         header_up Host {host}
         header_up X-Forwarded-Proto {scheme}
         header_up X-Forwarded-For {remote}
