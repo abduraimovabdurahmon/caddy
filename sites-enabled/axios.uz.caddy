@@ -1,16 +1,28 @@
+# ======================
+# FRONTEND
+# ======================
 sso.axios.uz {
     encode gzip zstd
 
-    # --- API backend ---
-    @api path /api/* 
-    reverse_proxy @api localhost:8080
-
-    # --- Frontend ---
     root * /var/www/sso.axios.uz.frontend
     try_files {path} /index.html
     file_server
 
-    # --- Xavfsizlik headerlari ---
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+    }
+}
+
+# ======================
+# BACKEND
+# ======================
+sso-backend.axios.uz {
+    encode gzip zstd
+    reverse_proxy localhost:8080
+
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
         X-Content-Type-Options "nosniff"
