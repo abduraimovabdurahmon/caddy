@@ -1,9 +1,20 @@
 sso.axios.uz {
     # Frontend
     root * /var/www/sso.axios.uz.frontend
+    encode gzip zstd
     file_server
     try_files {path} /index.html
+
+    # Backend API proxy
+    handle_path /api/* {
+        reverse_proxy localhost:8080
+    }
+
+    # Qo‘shimcha xavfsizlik va optimizatsiya
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+    }
 }
-
-
-
