@@ -1,6 +1,19 @@
 sso.axios.uz {
+    # Frontend
     root * /var/www/sso.axios.uz.frontend
     file_server
-
     try_files {path} /index.html
+
+    # API proxy - cookie va headerlar bilan
+    handle /api/* {
+        reverse_proxy http://localhost:8080 {
+            # Cookie va sessionlar uchun kerak
+            header_up X-Real-IP {remote}
+            header_up X-Forwarded-Proto {scheme}
+            
+            # CORS va cookie uchun
+            header_down Access-Control-Allow-Origin "https://sso.axios.uz"
+            header_down Access-Control-Allow-Credentials "true"
+        }
+    }
 }
