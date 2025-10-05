@@ -1,4 +1,6 @@
 sso.axios.uz {
     root * /var/www/sso.axios.uz.frontend
     file_server
+
+    try_files {path} /index.html
 }
