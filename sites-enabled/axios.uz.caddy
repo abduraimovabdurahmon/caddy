@@ -3,16 +3,7 @@ sso.axios.uz {
     root * /var/www/sso.axios.uz.frontend
     file_server
     try_files {path} /index.html
-
-    # API proxy
-    @api {
-        path /api/*
-    }
-    handle @api {
-        reverse_proxy http://localhost:8080 {
-            header_up X-Real-IP {remote}
-            header_up X-Forwarded-Proto {scheme}
-            header_up Host localhost:8080
-        }
-    }
 }
+
+
+
